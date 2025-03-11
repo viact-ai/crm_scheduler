@@ -1,0 +1,51 @@
+services:
+  prefect-server:
+    image: prefecthq/prefect:3-latest
+    ports:
+      - "4200:4200"
+    volumes:
+      - prefect-data:/root/.prefect
+
+    environment:
+      - PREFECT_API_URL=http://localhost:4200/api
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+      - EXTRA_PIP_PACKAGES=
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4200/api/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    entrypoint: >
+      sh -c "apt-get update && apt-get install -y curl && prefect server start"
+    networks:
+      - prefect-network
+  prefect-worker-1:
+    image: prefecthq/prefect:3-latest
+    environment:
+      - PREFECT_API_URL=http://prefect-server:4200/api
+      - PREFECT_API_HOST=prefect-server
+    depends_on:
+      prefect-server:
+        condition: service_healthy
+    command: prefect worker start -p default-pool
+    networks:
+      - prefect-network
+  prefect-worker-2:
+    image: prefecthq/prefect:3-latest
+    environment:
+      - PREFECT_API_URL=http://prefect-server:4200/api
+      - PREFECT_API_HOST=prefect-server
+    depends_on:
+      prefect-server:
+        condition: service_healthy
+    command: prefect worker start -p default-pool
+    networks:
+      - prefect-network
+
+volumes:
+  prefect-data:
+
+
+networks:
+  prefect-network:
+    driver: bridge
