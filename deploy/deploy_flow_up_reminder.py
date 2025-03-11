@@ -28,7 +28,7 @@ def deploy():
         source=GitRepository(
             url="https://github.com/viact-ai/prefect-ai-schedules.git",
             credentials={
-                "access_token": Secret.load("access-token"),
+                "access_token": Secret.load("ACCESS_TOKEN"),
             },
         ),
         entrypoint="flows/flow_up_reminder.py:flow_up_reminder",
