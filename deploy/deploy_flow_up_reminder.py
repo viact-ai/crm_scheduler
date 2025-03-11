@@ -26,10 +26,7 @@ def deploy():
     flow.from_source(
         # Here we are using GitHub but it works for GitLab, Bitbucket, etc.
         source=GitRepository(
-            url="https://github.com/viact-ai/prefect-ai-schedules.git",
-            credentials={
-                "access_token": Secret.load("ACCESS_TOKEN"),
-            },
+            url="https://github.com/viact-ai/crm_scheduler.git",
         ),
         entrypoint="flows/flow_up_reminder.py:flow_up_reminder",
     ).deploy(
