@@ -26,7 +26,7 @@ async def flow_up_reminder():
 @task
 async def get_activities():
     q = """
-    SELECT * FROM leads WHERE updated_at < NOW() - INTERVAL '5 days'
+    SELECT * FROM leads WHERE timestamp < NOW() - INTERVAL '5 days'
     """
 
     return await sqlalchemy_query(q, sqlalchemy_credentials)
