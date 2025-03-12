@@ -21,7 +21,6 @@ from prefect.client.schemas.schedules import CronSchedule
 
 
 def deploy():
-    print(f"deploy deploy flow... {Secret.load('github')}")
     # flow.from_source will actually clone the repository to load the flow
     flow.from_source(
         # Here we are using GitHub but it works for GitLab, Bitbucket, etc.
@@ -40,5 +39,4 @@ def deploy():
 
 
 if __name__ == "__main__":
-    print(f"Deploying flow... {Secret.load('github')}")
     deploy()
