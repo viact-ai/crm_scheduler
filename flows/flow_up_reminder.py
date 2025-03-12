@@ -18,6 +18,7 @@ class Activity(BaseModel):
 @flow
 async def flow_up_reminder():
     logger = get_run_logger()
+    logger.info(f"flow_up_reminder start")
     activities = await get_activities()
     logger.info(f"Activities: {activities}")
 

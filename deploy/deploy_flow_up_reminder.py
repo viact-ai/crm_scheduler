@@ -29,7 +29,7 @@ def deploy():
         ),
         entrypoint="flows/flow_up_reminder.py:flow_up_reminder",
     ).deploy(
-        name="flow-up-reminder",
+        name="flow-up-reminder-1",
         schedules=[
             # Run the flow every minute on the minute
             CronSchedule(cron="* * * * *"),
