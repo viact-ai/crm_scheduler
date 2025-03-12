@@ -29,12 +29,13 @@ def deploy():
         ),
         entrypoint="flows/flow_up_reminder.py:flow_up_reminder",
     ).deploy(
-        name="flow-up-reminder-1",
+        name="flow-up-reminder-4",
         schedules=[
             # Run the flow every minute on the minute
             CronSchedule(cron="* * * * *"),
         ],
         work_pool_name="default-pool",
+        job_variables=dict(env=dict(EXTRA_PIP_PACKAGES="prefect-sqlalchemy"))
     )
 
 
